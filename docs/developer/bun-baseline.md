@@ -59,9 +59,9 @@ pre-commit.
   dual **ESM + CJS** package plus flat type declarations:
   `dist/index.js` (`--format esm`), `dist/index.cjs` (`--format cjs`), and
   `dist/index.d.ts` / `dist/index.d.cts`. `ioredis` is kept external.
-- `scripts/ci/build.sh` wraps that build with dependency setup and a
-  `bun pm pack --dry-run` tarball-contents assertion (the published set is
-  `dist/**` + `package.json` + `README.md` + `LICENSE` only).
+- `scripts/ci/build.sh` wraps that build with dependency setup; the package shape is
+  validated separately by `scripts/ci/pkg-validate.sh` (`bun pm pack` → `publint` + `attw`).
+  Only `dist` is published (`package.json` `files`).
 - This sample is a **library**, not a runnable service — `src/index.ts` has no
   entrypoint; it re-exports the sample API (`buildSampleKey`, `createRedisStore`,
   `persistSample`) and its types (`IKeyValueStore`, `RedisConnection`).

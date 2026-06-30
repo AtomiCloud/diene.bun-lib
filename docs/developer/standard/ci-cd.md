@@ -45,38 +45,36 @@ Runs only after successful CI on main branch. Handles:
 
 Runs when a new version tag is pushed. Handles deployment operations.
 
-### Artifact Publishing Model (npm Library)
+### Artifact Publishing Model (Docker & Helm)
 
-This instance is a publishable npm library, so its artifact is an npm package (not a Docker
-image or Helm chart). Publishing happens through reusable workflows on two triggers:
+Docker images and Helm charts publish through reusable workflows on two triggers:
 
-| Trigger          | When                       | What happens                                                                           |
-| ---------------- | -------------------------- | -------------------------------------------------------------------------------------- |
-| **CI** (commit)  | Every push                 | Build the dual ESM+CJS+types bundle and validate the package shape (`publint`, `attw`) |
-| **CD** (release) | `v*.*.*` tag (sem-release) | Stamp the tag version into `package.json` and `bun publish` the package to npm         |
+| Trigger          | When                       | What happens                                                                                                                            |
+| ---------------- | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| **CI** (commit)  | Every push                 | Build & push both image and chart, cached, tagged `<sha6>-<branch>`                                                                     |
+| **CD** (release) | `v*.*.*` tag (sem-release) | Re-run the same script with the semver — image gets the version tag (cached, so effectively a re-tag), chart is packaged at the version |
 
 Key properties:
 
-- The logic lives in `./scripts/ci/build.sh` (dual ESM+CJS+types build + tarball assertions),
-  `./scripts/ci/pkg-validate.sh` (build → `bun pm pack` → `publint` + `attw`), and
-  `./scripts/ci/publish.sh` (version stamp from `${{ github.ref_name }}` + `bun publish`). The
-  reusable workflows `⚡reusable-package-validate.yaml` (CI lane) and `⚡reusable-publish.yaml`
-  (CD lane) own setup and execution.
-- The toolchain is **Bun-only** — `bun build`, `bunx tsc`, `bun pm pack`, and `bun publish` run
-  under Bun with no node/npm runtime added to Nix. Publish runs in `nix develop .#cd`.
-- Publish auth is the `NPM_TOKEN` CI secret (exposed as `NPM_API_KEY`), written to a `.npmrc`
-  that is removed by a cleanup trap on exit. There is **no provenance/OIDC** (`id-token` is not
-  requested); workflow permissions are `contents: read`.
-- All Nix jobs (pre-commit, package-validate, publish, release) share the same Nix store cache
-  via `nscloud-cache-tag-atomi-nix-store-cache`.
+- The logic lives in `./scripts/ci/docker.sh [version]` and
+  `./scripts/ci/helm.sh <chart_path> [version]`. An empty version = per-commit CI; a version
+  arg = release. The reusable workflows (`⚡reusable-docker.yaml`, `⚡reusable-helm.yaml`)
+  pass the version (`${{ github.ref_name }}` on CD).
+- Setup uses the shared AtomiCloud actions — `AtomiCloud/actions.setup-docker` for Docker and
+  `AtomiCloud/actions.setup-nix` for Helm (Helm runs in `nix develop .#cd`). Do **not** call
+  the underlying nscloud/buildx actions directly.
+- All Nix jobs (pre-commit, Helm, release) share the same Nix store cache via
+  `nscloud-cache-tag-atomi-nix-store-cache`.
+- There is **no cap** on the number of images or charts — add a caller job per `image_name`
+  / `chart_path`.
 
 ### Dev Shells
 
-| Shell        | Used by                                 |
-| ------------ | --------------------------------------- |
-| `.#ci`       | CI checks (pre-commit, build, validate) |
-| `.#cd`       | CD / npm publish                        |
-| `.#releaser` | Semantic release                        |
+| Shell        | Used by                         |
+| ------------ | ------------------------------- |
+| `.#ci`       | CI checks (pre-commit)          |
+| `.#cd`       | CD / artifact publishing (Helm) |
+| `.#releaser` | Semantic release                |
 
 ## The Execution Pattern
 
@@ -116,15 +114,15 @@ Setup Nix -> Setup Caches -> nix develop -c ./scripts/ci/script.sh
 
 **Reusable workflow is responsible for:**
 
-- Setup (`AtomiCloud/actions.setup-nix@v3` + `AtomiCloud/actions.cache-bun@v1`)
+- Setup (`AtomiCloud/actions.setup-nix@v3` or `AtomiCloud/actions.setup-docker@v2`)
 - Running the shell script from `scripts/ci/`
 
 ### Inputs: only when required
 
 Reusable workflows declare an input **only if they use it**. Cache keys no longer depend on
-platform/service, so `atomi_platform` / `atomi_service` are **not** required inputs — pre-commit,
-build, package-validate, publish, and release take no inputs, and `⚡reusable-test.yaml` takes
-only `mode`.
+platform/service, so `atomi_platform` / `atomi_service` are **not** required inputs — pre-commit
+and release take no inputs, `⚡reusable-docker.yaml` takes `image_name`/`dockerfile`/…, and
+`⚡reusable-helm.yaml` takes `chart_path`/`version`.
 
 ### Example: Reusable Workflow Structure
 
