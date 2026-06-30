@@ -1,3 +1,11 @@
+<!-- Badge targets point at AtomiCloud/diene.bun-lib and are rewritten on template promotion. -->
+
+[![CI](https://github.com/AtomiCloud/diene.bun-lib/actions/workflows/ci.yaml/badge.svg)](https://github.com/AtomiCloud/diene.bun-lib/actions/workflows/ci.yaml)
+[![Coverage](https://codecov.io/gh/AtomiCloud/diene.bun-lib/branch/main/graph/badge.svg)](https://codecov.io/gh/AtomiCloud/diene.bun-lib)
+[![Unit Tests](https://img.shields.io/github/check-runs/AtomiCloud/diene.bun-lib/main?nameFilter=Unit%20Tests%20%2F%20Unit%20Tests&label=Unit%20Tests)](https://github.com/AtomiCloud/diene.bun-lib/actions/workflows/ci.yaml)
+[![Integration Tests](https://img.shields.io/github/check-runs/AtomiCloud/diene.bun-lib/main?nameFilter=Integration%20Tests%20%2F%20Integration%20Tests&label=Integration%20Tests)](https://github.com/AtomiCloud/diene.bun-lib/actions/workflows/ci.yaml)
+[![Commits per month](https://img.shields.io/github/commit-activity/m/AtomiCloud/diene.bun-lib)](https://github.com/AtomiCloud/diene.bun-lib/commits/main)
+
 # Development Environment
 
 All binaries, tools, and PATH are managed by **Nix**. Do not install tools manually or modify PATH outside of the nix configuration.
