@@ -1,7 +1,5 @@
 version: '3'
 includes:
-  docker: tasks/Taskfile.docker.yaml
-  helm: tasks/Taskfile.helm.yaml
   secret: tasks/Taskfile.secret.yaml
   unit:
     taskfile: tasks/Taskfile.test.yaml
@@ -24,9 +22,9 @@ tasks:
     cmds:
       - rm -rf dist node_modules coverage
   build:
-    desc: Build the neutral sample bundle to dist/
+    desc: Build the publishable library (ESM + CJS + types) to dist/
     cmds:
-      - bun build ./src/index.ts --outdir ./dist --target bun
+      - ./scripts/local/build.sh
   lint:
     desc: Lints the whole code-base
     cmds:

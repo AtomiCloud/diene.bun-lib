@@ -70,7 +70,7 @@ atomi/workspace:
       answers:
         atomi/helm:
           type: Bool
-          value: true
+          value: false
         atomi/service:
           type: String
           value: bun-base
@@ -85,7 +85,7 @@ atomi/workspace:
           value: true
         atomi/docker:
           type: Bool
-          value: true
+          value: false
         atomi/platform:
           type: String
           value: diene
@@ -96,8 +96,6 @@ atomi/workspace:
   files:
     - .claude/skills/ci-cd-workflows/SKILL.md
     - .claude/skills/conventional-commits/SKILL.md
-    - .claude/skills/docker-push/SKILL.md
-    - .claude/skills/helm-push/SKILL.md
     - .claude/skills/infisical/SKILL.md
     - .claude/skills/linting/SKILL.md
     - .claude/skills/nix/SKILL.md
@@ -107,15 +105,12 @@ atomi/workspace:
     - .claude/skills/shell-conventions/SKILL.md
     - .claude/skills/taskfile-conventions/SKILL.md
     - .coderabbit.yaml
-    - .dockerignore
     - .envrc
     - .github/actionlint.yaml
     - .github/dependabot.yml
     - .github/workflows/cd.yaml
     - .github/workflows/ci.yaml
     - .github/workflows/release.yaml
-    - .github/workflows/⚡reusable-docker.yaml
-    - .github/workflows/⚡reusable-helm.yaml
     - .github/workflows/⚡reusable-precommit.yaml
     - .github/workflows/⚡reusable-release.yaml
     - .github/workflows/🛡️merge-gatekeeper.yml
@@ -129,8 +124,6 @@ atomi/workspace:
     - docs/developer/CommitConventions.md
     - docs/developer/standard/ci-cd.md
     - docs/developer/standard/conventional-commits.md
-    - docs/developer/standard/docker.md
-    - docs/developer/standard/helm.md
     - docs/developer/standard/infisical.md
     - docs/developer/standard/linting.md
     - docs/developer/standard/nix.md
@@ -139,23 +132,15 @@ atomi/workspace:
     - docs/developer/standard/shell-scripts.md
     - docs/developer/standard/taskfile.md
     - flake.nix
-    - infra/Dockerfile
-    - infra/root_chart/Chart.yaml
-    - infra/root_chart/templates/.gitkeep
-    - infra/root_chart/values.yaml
     - nix/env.nix
     - nix/fmt.nix
     - nix/packages.nix
     - nix/pre-commit.nix
     - nix/shells.nix
-    - scripts/ci/docker.sh
-    - scripts/ci/helm.sh
     - scripts/ci/pre-commit.sh
     - scripts/ci/release.sh
     - scripts/ci/setup.sh
     - scripts/local/secrets.sh
-    - tasks/Taskfile.docker.yaml
-    - tasks/Taskfile.helm.yaml
     - tasks/Taskfile.secret.yaml
 managed_files:
   - .claude/skills/ci-cd-workflows/SKILL.md
@@ -180,12 +165,10 @@ managed_files:
   - .claude/skills/contributor-docs/write/write-file.md
   - .claude/skills/conventional-commits/SKILL.md
   - .claude/skills/datetime/SKILL.md
-  - .claude/skills/docker-push/SKILL.md
   - .claude/skills/domain-modeling/SKILL.md
   - .claude/skills/domain-modeling/reference.md
   - .claude/skills/error-handling/SKILL.md
   - .claude/skills/error-handling/reference.md
-  - .claude/skills/helm-push/SKILL.md
   - .claude/skills/infisical/SKILL.md
   - .claude/skills/linting/SKILL.md
   - .claude/skills/nix/SKILL.md
@@ -203,15 +186,12 @@ managed_files:
   - .claude/skills/utilities/SKILL.md
   - .claude/skills/validation/SKILL.md
   - .coderabbit.yaml
-  - .dockerignore
   - .envrc
   - .github/actionlint.yaml
   - .github/dependabot.yml
   - .github/workflows/cd.yaml
   - .github/workflows/ci.yaml
   - .github/workflows/release.yaml
-  - .github/workflows/⚡reusable-docker.yaml
-  - .github/workflows/⚡reusable-helm.yaml
   - .github/workflows/⚡reusable-precommit.yaml
   - .github/workflows/⚡reusable-release.yaml
   - .github/workflows/🛡️merge-gatekeeper.yml
@@ -233,12 +213,10 @@ managed_files:
   - docs/developer/standard/conventional-commits.md
   - docs/developer/standard/datetime/index.md
   - docs/developer/standard/datetime/languages/typescript.md
-  - docs/developer/standard/docker.md
   - docs/developer/standard/domain-driven-design/index.md
   - docs/developer/standard/domain-driven-design/languages/typescript.md
   - docs/developer/standard/functional-practices/index.md
   - docs/developer/standard/functional-practices/languages/typescript.md
-  - docs/developer/standard/helm.md
   - docs/developer/standard/infisical.md
   - docs/developer/standard/linting.md
   - docs/developer/standard/nix.md
@@ -259,21 +237,13 @@ managed_files:
   - docs/developer/standard/validation/index.md
   - docs/developer/standard/validation/languages/typescript.md
   - flake.nix
-  - infra/Dockerfile
-  - infra/root_chart/Chart.yaml
-  - infra/root_chart/templates/.gitkeep
-  - infra/root_chart/values.yaml
   - nix/env.nix
   - nix/fmt.nix
   - nix/packages.nix
   - nix/pre-commit.nix
   - nix/shells.nix
-  - scripts/ci/docker.sh
-  - scripts/ci/helm.sh
   - scripts/ci/pre-commit.sh
   - scripts/ci/release.sh
   - scripts/ci/setup.sh
   - scripts/local/secrets.sh
-  - tasks/Taskfile.docker.yaml
-  - tasks/Taskfile.helm.yaml
   - tasks/Taskfile.secret.yaml

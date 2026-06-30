@@ -1,0 +1,22 @@
+name: ⚡ Reusable Publish
+on:
+  workflow_call:
+    secrets:
+      NPM_TOKEN:
+        required: true
+jobs:
+  publish:
+    name: Publish to npm
+    permissions:
+      contents: read
+    runs-on:
+      - nscloud-ubuntu-22.04-amd64-4x8-with-cache
+      - nscloud-cache-size-50gb
+      - nscloud-cache-tag-atomi-nix-store-cache
+    steps:
+      - uses: AtomiCloud/actions.setup-nix@v3
+      - uses: AtomiCloud/actions.cache-bun@v1
+      - name: Publish library
+        env:
+          NPM_API_KEY: ${{ secrets.NPM_TOKEN }}
+        run: nix develop .#cd -c ./scripts/ci/publish.sh

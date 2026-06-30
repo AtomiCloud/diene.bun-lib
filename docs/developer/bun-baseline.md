@@ -53,21 +53,26 @@ pre-commit.
 
 ## Build & runtime
 
-- Bun is the application runtime and build target.
-- `pls build` (and `scripts/ci/build.sh`) bundle `src/index.ts` to
-  `dist/index.js` with `bun build --target bun`.
-- `infra/Dockerfile` is a multi-stage Bun image pinned by digest.
-- The runtime stage runs as the non-root `bun` user.
-- `pls docker:build && pls docker:run` builds and runs the sample executable; it
-  prints the composed sample key by default. When `REDIS_HOST` and `REDIS_PORT`
-  are set, the executable uses the Redis adapter to persist and read back a
-  sample value.
+- Bun is the build toolchain (bundler, type emit, pack, publish) — there is no
+  added node/npm runtime.
+- `pls build` runs `scripts/local/build.sh`, which bundles `src/index.ts` into a
+  dual **ESM + CJS** package plus flat type declarations:
+  `dist/index.js` (`--format esm`), `dist/index.cjs` (`--format cjs`), and
+  `dist/index.d.ts` / `dist/index.d.cts`. `ioredis` is kept external.
+- `scripts/ci/build.sh` wraps that build with dependency setup and a
+  `bun pm pack --dry-run` tarball-contents assertion (the published set is
+  `dist/**` + `package.json` + `README.md` + `LICENSE` only).
+- This sample is a **library**, not a runnable service — `src/index.ts` has no
+  entrypoint; it re-exports the sample API (`buildSampleKey`, `createRedisStore`,
+  `persistSample`) and its types (`IKeyValueStore`, `RedisConnection`).
 
 ## External service / compute cost
 
 - Codecov upload runs only in CI and is best-effort.
-- Integration tests and Docker image builds require a Docker runtime.
-- Unit, integration, build, Docker, and Helm are separate CI jobs.
+- Integration tests require a Docker runtime (Testcontainers spins up a throwaway
+  Redis); unit tests and the build do not.
+- Unit, integration, build, and `package-validate` (`publint` + `attw`) are
+  separate CI jobs.
 
 ## Template maintenance
 
@@ -75,17 +80,16 @@ pre-commit.
 Keep CyanPrint-managed/shared scaffold edits additive. Settings a downstream
 template is expected to adapt:
 
-- **Package metadata** — `package.json` `name`/`description`.
+- **Package metadata** — `package.json` `name`/`description` (and the scoped
+  publish name, the single source of the instance identity).
 - **Coverage thresholds** — `codecov.yml` and any Bun thresholds added later.
-- **Docker runtime entrypoint** — `infra/Dockerfile` `ENTRYPOINT`.
 - **Badges / template promotion** — the `AtomiCloud/diene.bun-lib` paths in
   `README.md` badges are rewritten on promotion.
 - **Sample source/tests** — `src/lib`, `src/adapters`, `src/index.ts`, and the
   matching `tests/` suites are illustrative and replaced per service.
 
-The Helm and secret task files (`tasks/Taskfile.helm.yaml`,
-`tasks/Taskfile.secret.yaml`) are intentionally left untouched by the Bun
-baseline — there is no direct Bun dependency on them.
+The secret task file (`tasks/Taskfile.secret.yaml`) is intentionally left
+untouched by the Bun baseline — there is no direct Bun dependency on it.
 
 Merge ownership stays manual: CI is driven to green, but the actual merge is a
 human action.
