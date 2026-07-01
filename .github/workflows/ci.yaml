@@ -22,16 +22,7 @@ jobs:
     name: Build Validation
     uses: ./.github/workflows/⚡reusable-build.yaml
     secrets: inherit
-  docker:
-    name: Docker Image
-    uses: ./.github/workflows/⚡reusable-docker.yaml
+  package-validate:
+    name: Package Validation
+    uses: ./.github/workflows/⚡reusable-package-validate.yaml
     secrets: inherit
-    with:
-      image_name: diene-bun-lib
-      dockerfile: ./infra/Dockerfile
-  helm:
-    name: Helm Chart
-    uses: ./.github/workflows/⚡reusable-helm.yaml
-    secrets: inherit
-    with:
-      chart_path: ./infra/root_chart

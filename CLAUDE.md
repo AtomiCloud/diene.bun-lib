@@ -42,8 +42,7 @@ All binaries, tools, and PATH are managed by **Nix**. Do not install tools manua
 ## Prerequisites
 
 1. **Nix** — package manager ([install](https://nixos.org/download))
-2. **Docker** — container runtime ([install](https://docs.docker.com/get-docker))
-3. **direnv** — auto-loads the nix shell on `cd` ([install](https://direnv.net/docs/installation.html))
+2. **direnv** — auto-loads the nix shell on `cd` ([install](https://direnv.net/docs/installation.html))
 
 ## Getting Started
 
@@ -60,14 +59,6 @@ See **[docs/developer/standard/nix.md](docs/developer/standard/nix.md)** for the
 - Environment groups and shells
 - Formatters and pre-commit hooks
 - Adding registries
-
-# Docker
-
-This project uses Docker for containerized builds and deployments. See [docs/developer/standard/docker.md](docs/developer/standard/docker.md) for details.
-
-# Helm
-
-This project uses Helm for Kubernetes chart packaging and deployment. See [docs/developer/standard/helm.md](docs/developer/standard/helm.md) for details.
 
 # Linting
 
