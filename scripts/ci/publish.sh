@@ -14,7 +14,7 @@ bun pm pkg set "version=${VERSION}"
 echo "🔐 Writing npm auth token..."
 printf '//registry.npmjs.org/:_authToken=%s\n' "${NPM_API_KEY}" >.npmrc
 
-echo "🚀 Publishing @atomicloud/bun-lib@${VERSION}..."
+echo "🚀 Publishing version ${VERSION}..."
 bun publish --access public --tolerate-republish
 
-echo "✅ Published @atomicloud/bun-lib@${VERSION}"
+echo "✅ Published version ${VERSION}"
