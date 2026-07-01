@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-: "${NPM_API_KEY:?❌ NPM_API_KEY must be set (from the NPM_TOKEN secret)}"
-: "${GITHUB_REF_NAME:?❌ GITHUB_REF_NAME must be set (the pushed tag, e.g. v1.2.3)}"
+[ -z "${NPM_API_KEY:-}" ] && echo "❌ NPM_API_KEY must be set (from the NPM_TOKEN secret)" >&2 && exit 1
+[ -z "${GITHUB_REF_NAME:-}" ] && echo "❌ GITHUB_REF_NAME must be set (the pushed tag, e.g. v1.2.3)" >&2 && exit 1
 
 VERSION="${GITHUB_REF_NAME#v}"
 
