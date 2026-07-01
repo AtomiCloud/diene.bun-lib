@@ -8,10 +8,6 @@ VERSION="${GITHUB_REF_NAME#v}"
 
 ./scripts/ci/build.sh
 
-# Restore the manifest and scrub the token on every exit path.
-cp package.json package.json.orig
-trap 'rm -f .npmrc; mv -f package.json.orig package.json' EXIT
-
 echo "🔖 Stamping version ${VERSION}..."
 bun pm pkg set "version=${VERSION}"
 
