@@ -1,3 +1,10 @@
+## 1.0.0 (2026-07-01)
+
+
+### ✨ Features ✨
+
+* make bun-lib a publishable npm library (ESM + CJS + types) ([2a94de7](https://github.com/AtomiCloud/diene.bun-lib/commit/2a94de7954bf563493ef080e02d68c8b39d2e563))
+
 ## 1.0.0 (2026-06-29)
 
 
