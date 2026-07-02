@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/AtomiCloud/diene.bun-lib/compare/v1.1.0...v1.1.1) (2026-07-02)
+
+
+### 🐛 Bug Fixes 🐛
+
+* stamp version at the release commit and use the NPM_API_KEY secret ([525a5e0](https://github.com/AtomiCloud/diene.bun-lib/commit/525a5e0cdb76a8a092c298ebc7ceceb31c1b5e4c))
+
 ## [1.1.0](https://github.com/AtomiCloud/diene.bun-lib/compare/v1.0.0...v1.1.0) (2026-07-01)
 
 ## 1.0.0 (2026-07-01)
