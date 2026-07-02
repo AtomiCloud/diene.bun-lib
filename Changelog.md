@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/AtomiCloud/diene.bun-lib/compare/v1.1.1...v1.1.2) (2026-07-02)
+
+
+### 🐛 Bug Fixes 🐛
+
+* keep release commits lockfile-safe when stamping the version ([49034dd](https://github.com/AtomiCloud/diene.bun-lib/commit/49034dd3436e88ed9cc4d11de09c613f3c180196))
+
 ## [1.1.1](https://github.com/AtomiCloud/diene.bun-lib/compare/v1.1.0...v1.1.1) (2026-07-02)
 
 
