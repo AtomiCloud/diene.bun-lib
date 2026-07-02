@@ -8,8 +8,7 @@ VERSION="${GITHUB_REF_NAME#v}"
 
 ./scripts/ci/build.sh
 
-# The version is stamped into package.json at the release commit (scripts/release/bump.sh via
-# semantic-release), so the tag checkout already carries it — verify instead of mutating.
+# The release commit already carries the stamped version — verify instead of mutating.
 echo "🔎 Verifying package.json is stamped with ${VERSION}..."
 [ "$(jq -r .version package.json)" = "${VERSION}" ] || {
   echo "❌ package.json version ($(jq -r .version package.json)) != tag version (${VERSION})" >&2
