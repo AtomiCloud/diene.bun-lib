@@ -15,7 +15,7 @@ tasks:
   setup:
     desc: Setup the repository
     cmds:
-      - ./scripts/ci/setup.sh
+      - bun install --frozen-lockfile
       - ./scripts/local/secrets.sh
   clean:
     desc: Remove build, dependency, and coverage artifacts
