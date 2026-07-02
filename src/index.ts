@@ -1,3 +1,4 @@
+// ─── DOMAIN WIRING · the sample export surface (delete through END to replace the sample) ────────
 import type { IKeyValueStore, RedisConnection } from './adapters/kv-store';
 import { RedisKeyValueStore } from './adapters/redis-kv-store';
 import { namespacedKey } from './lib/slug';
@@ -22,3 +23,4 @@ export async function persistSample(
   await store.set(composed, value);
   return store.get(composed);
 }
+// ─── END DOMAIN WIRING ────────────────────────────────────────────────────────────────────────────

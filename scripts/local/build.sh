@@ -5,10 +5,10 @@ echo "🧹 Cleaning dist/..."
 rm -rf dist
 
 echo "🔨 Building ESM bundle..."
-bun build ./src/index.ts --outfile dist/index.js --format esm --target node --external ioredis
+bun build ./src/index.ts --outfile dist/index.js --format esm --target node --packages external
 
 echo "🔨 Building CJS bundle..."
-bun build ./src/index.ts --outfile dist/index.cjs --format cjs --target node --external ioredis
+bun build ./src/index.ts --outfile dist/index.cjs --format cjs --target node --packages external
 
 echo "🔠 Typechecking..."
 bunx tsc -p tsconfig.json

@@ -10,10 +10,7 @@ VERSION="${GITHUB_REF_NAME#v}"
 
 # The release commit already carries the stamped version — verify instead of mutating.
 echo "🔎 Verifying package.json is stamped with ${VERSION}..."
-[ "$(jq -r .version package.json)" = "${VERSION}" ] || {
-  echo "❌ package.json version ($(jq -r .version package.json)) != tag version (${VERSION})" >&2
-  exit 1
-}
+[ "$(jq -r .version package.json)" != "${VERSION}" ] && echo "❌ package.json version ($(jq -r .version package.json)) != tag version (${VERSION})" >&2 && exit 1
 
 echo "🔐 Writing npm auth token..."
 printf '//registry.npmjs.org/:_authToken=%s\n' "${NPM_API_KEY}" >.npmrc
