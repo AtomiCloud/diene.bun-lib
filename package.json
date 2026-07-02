@@ -1,6 +1,6 @@
 {
   "name": "@atomicloud/bun-lib",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Bun library baseline for AtomiCloud/diene.bun-lib — a publishable ESM + CJS + types sample.",
   "type": "module",
   "main": "./dist/index.cjs",
